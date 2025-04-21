@@ -1,41 +1,31 @@
-import { View, Text } from "react-native";
-import { ImageViewer as ImageZoomViewer } from "react-native-image-zoom-viewer";
+import { View, Text, Modal } from "react-native";
+import {
+  ImageViewer as ImageZoomViewer,
+  ImageViewerPropsDefine,
+} from "react-native-image-zoom-viewer";
 
-const images = [
+const images: ImageViewerPropsDefine["imageUrls"] = [
   {
-    // Simplest usage.
-    url: "https://avatars2.githubusercontent.com/u/7970947?v=3&s=460",
-
-    // width: number
-    // height: number
-    // Optional, if you know the image size, you can set the optimization performance
-
-    // You can pass props to <Image />.
-    props: {
-      // headers: ...
-    },
+    url: "https://picsum.photos/200/300",
   },
-  // , {
-  //     url: '',
-  //     props: {
-  //         // Or you can set source directory.
-  //         source: require('../background.png')
-  //     }
-  // }
 ];
 
-export default function ImageViewerComponent() {
+type TProps ={
+    visible:boolean
+    onSwipeDown:()=>void
+}
+
+export default function ImageViewerComponent(props:TProps) {
   return (
-    <View style={{ flex: 1, backgroundColor: "black" }}>
-      <Text style={{ color: "white", fontSize: 20, marginBottom: 10 }}>
-        Image Viewer
-      </Text>
-      <ImageZoomViewer
-        imageUrls={images}
-        index={0}
-        onSwipeDown={() => {}}
-        enableSwipeDown
-      />
+    <View>
+      <Modal visible={props.visible} transparent={false}>
+        <ImageZoomViewer
+          imageUrls={images}
+          index={0}
+          onSwipeDown={props.onSwipeDown}
+          enableSwipeDown
+        />
+      </Modal>
     </View>
   );
 }
